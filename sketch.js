@@ -12,7 +12,7 @@ let cellHeight;
 
 
 function preload() {
-  tile = loadImage("assets/pattern.svg");
+  tile = loadImage("./assets/pattern.svg");
 }
 
 function setup() {
