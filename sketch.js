@@ -2,7 +2,7 @@ let tile;
 let tiles = [];
 
 const gridSpacing = 20;
-const tileSize = 10;
+const tileSize = 15;
 
 let rows;
 let cols;
@@ -27,8 +27,8 @@ function setup() {
 
   for (let i = 0; i < rows; i++) {
     let y = i * cellHeight + cellHeight / 2;
-    for (let j = 0; j < cols; j++) {
-      let offset = i % 2 === 0 ? cellWidth / 2 : 0;
+    for (let j = 0; j < cols+2; j++) {
+      let offset = i % 2 === 0 ? 0 : -cellWidth/2;
       let x = j * cellWidth + offset;
       tiles.push(new PatternTile(x, y));
     }
