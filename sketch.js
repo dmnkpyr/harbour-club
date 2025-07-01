@@ -49,12 +49,11 @@ class PatternTile {
     let dx = this.ox - mouseX;
     let dy = this.oy - mouseY;
     let distance = sqrt(dx * dx + dy * dy);
-    let minDistance = 200;
+    let minDistance = 300;
 
     if (distance < minDistance) {
       let strength = 1 - distance / minDistance;
       let force = 20 * strength * strength;
-      force = constrain(force, 0, 20);
       let angle = atan2(dy, dx);
       this.x = this.ox + cos(angle) * force;
       this.y = this.oy + sin(angle) * force;
