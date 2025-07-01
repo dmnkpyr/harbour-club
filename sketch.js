@@ -1,3 +1,6 @@
+let canvas;
+let resizeTimeout;
+
 let tile;
 let tiles = [];
 
@@ -16,23 +19,9 @@ function preload() {
 }
 
 function setup() {
-  let canvas = createCanvas(1200, 400);
-  canvas.parent("container");
   imageMode(CENTER);
+  canvasSetup();
 
-  rows = height / gridSpacing;
-  cols = width / gridSpacing;
-  cellWidth = width / cols;
-  cellHeight = height / rows;
-
-  for (let i = 0; i < rows; i++) {
-    let y = i * cellHeight + cellHeight / 2;
-    for (let j = 0; j < cols+2; j++) {
-      let offset = i % 2 === 0 ? 0 : -cellWidth/2;
-      let x = j * cellWidth + offset;
-      tiles.push(new PatternTile(x, y));
-    }
-  }
 }
 
 function draw() {
@@ -68,6 +57,39 @@ class PatternTile {
       this.scaleFactor = lerp(this.scaleFactor, targetFactor, 0.025);
     } else {
       this.scaleFactor = targetFactor;
+    }
+  }
+}
+
+
+
+
+function windowResized() {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => {
+    canvasSetup();
+  }, 100);
+}
+
+
+function canvasSetup() {
+    //Canvas setup
+    noCanvas(); // Remove any existing canvas
+    canvas = createCanvas(windowWidth, 400);
+    canvas.parent('container');
+
+
+  rows = height / gridSpacing;
+  cols = width / gridSpacing;
+  cellWidth = width / cols;
+  cellHeight = height / rows;
+
+  for (let i = 0; i < rows; i++) {
+    let y = i * cellHeight + cellHeight / 2;
+    for (let j = 0; j < cols+2; j++) {
+      let offset = i % 2 === 0 ? 0 : -cellWidth/2;
+      let x = j * cellWidth + offset;
+      tiles.push(new PatternTile(x, y));
     }
   }
 }
