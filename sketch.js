@@ -20,6 +20,7 @@ function preload() {
 
 function setup() {
   imageMode(CENTER);
+  pixelDensity(3)
   canvasSetup();
 
 }
