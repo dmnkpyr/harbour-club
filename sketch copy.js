@@ -39,29 +39,24 @@ class PatternTile {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.ox = x; // original x
-    this.oy = y; // original y
+    this.scaleFactor = 1;
   }
   show() {
-    image(tile, this.x, this.y, tileSize, tileSize);
+    image(
+      tile,
+      this.x,
+      this.y,
+      tileSize * this.scaleFactor,
+      tileSize * this.scaleFactor
+    );
   }
   update() {
-    let dx = this.ox - mouseX;
-    let dy = this.oy - mouseY;
-    let distance = sqrt(dx * dx + dy * dy);
-    let minDistance = 200;
-
-    if (distance < minDistance) {
-      let strength = 1 - distance / minDistance;
-      let force = 20 * strength * strength;
-      force = constrain(force, 0, 20);
-      let angle = atan2(dy, dx);
-      this.x = this.ox + cos(angle) * force;
-      this.y = this.oy + sin(angle) * force;
+    let mouseDistance = dist(mouseX, mouseY, this.x, this.y);
+    let targetFactor = 1 + 1.9 * exp(- mouseDistance * 0.006);
+    if (targetFactor < this.scaleFactor) {
+      this.scaleFactor = lerp(this.scaleFactor, targetFactor, 0.025);
     } else {
-      // Return to original position
-      this.x = this.ox;
-      this.y = this.oy;
+      this.scaleFactor = targetFactor;
     }
   }
 }
@@ -89,7 +84,7 @@ function canvasSetup() {
   cellWidth = width / cols;
   cellHeight = height / rows;
 
-  for (let i = 1; i < rows-1; i++) {
+  for (let i = 0; i < rows; i++) {
     let y = i * cellHeight + cellHeight / 2;
     for (let j = 0; j < cols+2; j++) {
       let offset = i % 2 === 0 ? 0 : -cellWidth/2;
