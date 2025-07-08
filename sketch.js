@@ -16,18 +16,19 @@ let myp5 = new p5((p) => {
   let cellWidth;
   let cellHeight;
 
-  // Load the tile image asset
+  // Load the tile image
   p.preload = () => {
     tile = p.loadImage("assets/pattern.svg");
   };
 
-  // Initial setup for canvas
+  // Initial setup
   p.setup = () => {
     p.imageMode(p.CENTER);
     p.pixelDensity(3);
     canvasSetup();
   };
 
+  // Draw loop
   p.draw = () => {
     p.background(bgColor); // match container background
     for (let t of tiles) {
@@ -36,6 +37,7 @@ let myp5 = new p5((p) => {
     }
   };
 
+  // Tile class
   class PatternTile {
     constructor(x, y) {
       this.x = x;   
@@ -106,7 +108,7 @@ let myp5 = new p5((p) => {
     cellHeight = p.height / rows;
 
     // Create grid pattern
-    for (let i = 1; i < rows - 1; i++) {
+    for (let i = 1; i < rows - 2; i++) {
       let y = i * cellHeight + cellHeight / 2;
       for (let j = 0; j < cols + 2; j++) {
         let offset = i % 2 === 0 ? 0 : -cellWidth / 2;
