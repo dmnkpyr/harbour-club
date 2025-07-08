@@ -28,6 +28,7 @@ let myp5 = new p5((p) => {
 
   p.draw = () => {
     p.background(bgColor); // match container background
+    console.log(p.mouseX)
     for (let t of tiles) {
       t.update();
       t.show();
@@ -49,11 +50,12 @@ let myp5 = new p5((p) => {
 
     // Update position based on mouse interaction
     update() {
+      if (p.mouseX == 0) return
       let dx = this.ox - p.mouseX;
       let dy = this.oy - p.mouseY;
       let distance = p.sqrt(dx * dx + dy * dy);
       let minDistance = 300;
-
+      
       if (distance < minDistance) {
         // Displace based on proximity and direction
         let strength = 1 - distance / minDistance;
