@@ -30,7 +30,6 @@ let myp5 = new p5((p) => {
 
   p.draw = () => {
     p.background(bgColor); // match container background
-    console.log(p.mouseX)
     for (let t of tiles) {
       t.update();
       t.show();
