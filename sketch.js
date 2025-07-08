@@ -1,7 +1,9 @@
 let myp5 = new p5((p) => {
   let canvas;
   let bgColor;
+
   let resizeTimeout;
+  let mouseHasMoved = false;
 
   let tile;
   let tiles = [];
@@ -50,7 +52,7 @@ let myp5 = new p5((p) => {
 
     // Update position based on mouse interaction
     update() {
-      if (p.mouseX == 0) return
+      if (!mouseHasMoved) return; // return if mouse has not been moved
       let dx = this.ox - p.mouseX;
       let dy = this.oy - p.mouseY;
       let distance = p.sqrt(dx * dx + dy * dy);
@@ -70,6 +72,11 @@ let myp5 = new p5((p) => {
       }
     }
   }
+
+  // Check if mouse has been moved
+  p.mouseMoved = () => {
+  mouseHasMoved = true;
+};
 
   // Recalculate canvas and grid when window size changes
   p.windowResized = () => {
