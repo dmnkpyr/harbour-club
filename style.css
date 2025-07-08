@@ -1,19 +1,19 @@
 html, body {
   margin: 0;
   padding: 0;
-
+  background-color: #F8F4F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
-#container {
+#p5container {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100vw;
-  height: 100vh;
-  background-color: black;
-}
-
-canvas {
-  display: block;
-  
+  height: 40vh;
+  background-color: #F8F4F0;
+  overflow: hidden;
 }
