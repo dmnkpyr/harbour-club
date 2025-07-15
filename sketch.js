@@ -1,4 +1,19 @@
 let myp5 = new p5((p) => {
+  // Resume animation on any mouse press (left, right, etc.)
+  p.mousePressed = () => {
+    p.redraw();
+  };
+
+  // Resume animation on any mouse release
+  p.mouseReleased = () => {
+    p.redraw();
+  };
+
+  // Resume animation on mouse drag (in case of right-drag, etc.)
+  p.mouseDragged = () => {
+    mouseHasMoved = true;
+    p.redraw();
+  };
   let canvas;
   let bgColor;
 
@@ -26,6 +41,7 @@ let myp5 = new p5((p) => {
     p.imageMode(p.CENTER);
     p.pixelDensity(3);
     canvasSetup();
+    p.noLoop(); // Stop continuous looping
   };
 
   // Draw loop
@@ -35,6 +51,7 @@ let myp5 = new p5((p) => {
       t.update();
       t.show();
     }
+    mouseHasMoved = false; // Only animate on mouse move
   };
 
   // Tile class
@@ -76,14 +93,16 @@ let myp5 = new p5((p) => {
 
   // Check if mouse has been moved
   p.mouseMoved = () => {
-  mouseHasMoved = true;
-};
+    mouseHasMoved = true;
+    p.redraw(); // Redraw only on mouse move
+  };
 
   // Recalculate canvas and grid when window size changes
   p.windowResized = () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
       canvasSetup();
+      p.redraw(); // Redraw on resize
     }, 100);
   };
 
